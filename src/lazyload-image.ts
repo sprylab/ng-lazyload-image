@@ -5,16 +5,15 @@ import { Attributes, HookSet } from './types';
 export function lazyLoadImage<E>(hookSet: HookSet<E>, attributes: Attributes) {
   return (scrollObservable: Observable<E>) => {
     return scrollObservable.pipe(
-      filter(event =>
-        hookSet.isVisible({
+      mergeMap(event => {
+        const isVisible = hookSet.isVisible({
           element: attributes.element,
           event: event,
           offset: attributes.offset,
           scrollContainer: attributes.scrollContainer
-        })
-      ),
-      take(1),
-      mergeMap(() => hookSet.loadImage(attributes)),
+        });
+        return hookSet.loadImage(isVisible ? attributes : {...attributes, imagePath: undefined});
+      }),
       tap(imagePath =>
         hookSet.setLoadedImage({
           element: attributes.element,

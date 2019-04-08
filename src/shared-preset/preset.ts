@@ -37,18 +37,27 @@ export const loadImage: LoadImageFn = ({ element, useSrcset, imagePath }) => {
     if (useSrcset) {
       img.srcset = imagePath;
     } else {
-      img.src = imagePath;
+      if (imagePath) {
+        img.src = imagePath;
+      } else {
+        img.src = '';
+      }
     }
   }
 
   return Observable.create(observer => {
-    img.onload = () => {
-      observer.next(imagePath);
+    if (imagePath) {
+      img.onload = () => {
+        observer.next(imagePath);
+        observer.complete();
+      };
+      img.onerror = err => {
+        observer.error(null);
+      };
+    } else {
+      observer.next();
       observer.complete();
-    };
-    img.onerror = err => {
-      observer.error(null);
-    };
+    }
   });
 };
 

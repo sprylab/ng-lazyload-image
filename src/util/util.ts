@@ -11,6 +11,7 @@ export function isImageElement(element: HTMLImageElement | HTMLDivElement): elem
 }
 
 export function setImage(element: HTMLImageElement | HTMLDivElement, imagePath: string, useSrcset: boolean) {
+  console.log('SET IMAGE');
   if (isImageElement(element)) {
     if (useSrcset) {
       element.srcset = imagePath;
@@ -18,7 +19,11 @@ export function setImage(element: HTMLImageElement | HTMLDivElement, imagePath: 
       element.src = imagePath;
     }
   } else {
-    element.style.backgroundImage = `url('${imagePath}')`;
+    if (imagePath) {
+      element.style.backgroundImage = `url('${imagePath}')`;
+    } else {
+      element.style.backgroundImage = '';
+    }
   }
   return element;
 }
@@ -44,9 +49,7 @@ function setImageAndSources(setSourcesFn: (image: HTMLImageElement) => void) {
     if (isImageElement(element) && isChildOfPicture(element)) {
       setSourcesFn(element);
     }
-    if (imagePath) {
-      setImage(element, imagePath, useSrcset);
-    }
+    setImage(element, imagePath, useSrcset);
   };
 }
 
