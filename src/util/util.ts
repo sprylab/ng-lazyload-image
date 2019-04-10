@@ -11,7 +11,6 @@ export function isImageElement(element: HTMLImageElement | HTMLDivElement): elem
 }
 
 export function setImage(element: HTMLImageElement | HTMLDivElement, imagePath: string, useSrcset: boolean) {
-  console.log('SET IMAGE');
   if (isImageElement(element)) {
     if (useSrcset) {
       element.srcset = imagePath;

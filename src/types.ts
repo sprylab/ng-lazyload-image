@@ -32,6 +32,7 @@ export type Attributes<T = any> = {
   errorImagePath: string;
   useSrcset: boolean;
   offset: number;
+  unload: boolean;
   scrollContainer?: HTMLElement;
   scrollObservable?: Observable<T>;
 };

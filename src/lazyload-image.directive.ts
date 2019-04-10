@@ -29,6 +29,7 @@ export class LazyLoadImageDirective implements OnChanges, AfterContentInit, OnDe
   @Input() scrollObservable;      // Pass your own scroll emitter
   @Input() offset: number;        // The number of px a image should be loaded before it is in view port
   @Input() useSrcset: boolean;    // Whether srcset attribute should be used instead of src
+  @Input() unload: boolean;       // Whether the image should be unloaded if it leaves the view port
   @Output() onLoad: EventEmitter<boolean> = new EventEmitter(); // Callback when an image is loaded
   private propertyChanges$: ReplaySubject<Attributes>;
   private elementRef: ElementRef;
@@ -51,6 +52,7 @@ export class LazyLoadImageDirective implements OnChanges, AfterContentInit, OnDe
       errorImagePath: this.errorImage,
       useSrcset: this.useSrcset,
       offset: this.offset | 0,
+      unload: this.unload,
       scrollContainer: this.scrollTarget,
       scrollObservable: this.scrollObservable
     });
