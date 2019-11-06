@@ -12,10 +12,12 @@ export function isImageElement(element: HTMLImageElement | HTMLDivElement): elem
 
 export function setImage(element: HTMLImageElement | HTMLDivElement, imagePath: string, useSrcset: boolean) {
   if (isImageElement(element)) {
-    if (useSrcset) {
-      element.srcset = imagePath;
-    } else {
-      element.src = imagePath;
+    if (imagePath) {
+      if (useSrcset) {
+        element.srcset = imagePath;
+      } else {
+        element.src = imagePath;
+      }
     }
   } else {
     if (imagePath) {
